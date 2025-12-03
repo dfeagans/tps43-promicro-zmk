@@ -1,12 +1,30 @@
-name: Build User Config
+name: Build ZMK
 
 on:
   push:
     branches:
       - main
-  pull_request:
   workflow_dispatch:
 
 jobs:
   build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install West
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip git ninja-build cmake
+          pip3 install --upgrade west
+      - name: Initialize West
+        run: |
+          west init -l .
+          west update
+      - name: Build RP2040 ProMicro
+        run: |
+          west build -d build/rp2040_promicro -b rp2040_promicro config/
+      - name: Upload UF2
+        uses: actions/upload-artifact@v3
+        with:
+          name: zmk-uf2
+          path: build/rp2040_promicro/zephyr/zmk.uf2
