@@ -11,6 +11,10 @@ manifest:
 
 boards:
   - board: rp2040_promicro
+    shield: tps43
+
+shields:
+  - tps43
 
 sensor-behaviors:
   - sensor: tps43
