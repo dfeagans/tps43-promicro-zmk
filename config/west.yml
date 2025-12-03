@@ -1,14 +1,29 @@
 manifest:
-  defaults:
-    revision: v0.3
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
     - name: zmk
       remote: zmkfirmware
-      import: app/west.yml
+      revision: main
   self:
     path: config
+
+boards:
+  - board: rp2040_promicro
+
+sensor-behaviors:
+  - sensor: tps43
+    driver: cirque_pinnacle
+    bus: i2c
+    i2c:
+      sda-pin: GP0
+      scl-pin: GP28
+    dr-pin: GP29
+    invert-x: false
+    invert-y: true
+    gestures:
+      tap-to-click: true
+      tap-and-drag: true
+      two-finger-scroll: true
+      natural-scroll: true
