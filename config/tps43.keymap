@@ -1,0 +1,6 @@
+keymap:
+  - layer: default
+    bindings:
+      - &none
+    sensors:
+      - tps43
